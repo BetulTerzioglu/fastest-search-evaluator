@@ -1,0 +1,52 @@
+Hızlı Arama Değerlendirme Sistemi Projesi
+
+Bu projede, çeşitli web arama API'lerini ve servislerini değerlendirmek için kapsamlı bir sistem geliştirdim. Bu değerlendirme sisteminde hem teknik özellikleri hem de performans metriklerini ölçümlemeyi amaçladım.
+
+İlk olarak, projeye modüler bir yapı kazandırmak için klasör yapısını oluşturdum:
+- src/ ana klasörü altında core/, engines/, utils/ ve config/ alt klasörlerini düzenledim
+- tests/ klasörü oluşturarak test dosyalarını ayrı bir yerde topladım
+- examples/ klasörü oluşturarak örnek uygulamaları yerleştirdim
+
+SearchEngine adında bir temel arayüz sınıfı geliştirdim. Bu sınıf, tüm arama motorlarının uygulaması gereken ortak fonksiyonları ve özellikleri tanımladı. Her arama motoru için bu sınıftan türeyen özel sınıflar oluşturdum:
+- GoogleSearch
+- BingSearch
+- DuckDuckGoSearch
+- BraveSearch
+- QuickSearch
+
+Her bir arama motoru için gerekli API bağlantılarını kurdum ve sonuçları standart bir formatta döndüren kodları yazdım. API anahtarlarının güvenli bir şekilde saklanması için .env dosyası yapısı oluşturdum ve python-dotenv kütüphanesini kullanarak bu anahtarları kodda kullandım.
+
+SearchManager sınıfını geliştirerek, tüm arama motorlarını tek bir yerden yönetebilecek bir yapı oluşturdum. Bu sınıf sayesinde:
+- Tüm motorları dinamik olarak yükleyebildim
+- Aynı sorguyu farklı motorlarda çalıştırabildim
+- Performans ölçümlerini otomatik olarak yapabildim
+- Sonuçları detaylı raporlar halinde kaydettim
+
+DRY (Don't Repeat Yourself) prensiplerini uygulayarak, tekrarlanan kodları ortadan kaldırdım:
+- Merkezi bir ayarlar dosyası (settings.py) oluşturdum
+- Motor yükleme işlemlerini utils.py içine taşıdım
+- Dinamik test sınıfları oluşturarak test kodlarını tekrar etmekten kaçındım
+
+Raporlama sistemi için iki farklı format geliştirdim:
+1. Markdown formatında detaylı metin raporu
+2. Grafikler ve tablolar içeren PDF raporu
+
+PDF rapor oluşturucusu için matplotlib ve reportlab kütüphanelerini kullandım. Bu raporlarda:
+- Performans karşılaştırma grafikleri oluşturdum
+- Yanıt süresi dağılımı gösteren pasta grafikleri ekledim
+- Karşılaştırmalı tablolar düzenledim
+- Türkçe karakter desteği için DejaVuSans fontunu entegre ettim
+
+Brave Search motorunu ekledikten sonra, PDF raporunda Türkçe karakter sorunu olduğunu fark ettim. Bu sorunu çözmek için:
+- DejaVuSans ve DejaVuSans-Bold fontlarını projeye dahil ettim
+- PDF oluşturma kodunda font yapılandırmasını düzelttim
+- Matplotlib ayarlarını Türkçe karakterleri destekleyecek şekilde güncelledim
+
+Ayrıca, Brave arama motorunun API anahtarı olmadığında uygulamanın çökmesini engellemek için:
+- SearchEngine sınıfına is_available özelliği ekledim
+- Motor yükleme fonksiyonlarını sadece kullanılabilir motorları yükleyecek şekilde değiştirdim
+- API anahtarı eksikliğinde kullanıcıyı uyaracak ve boş sonuç döndürecek şekilde kodu düzenledim
+
+Benzersiz rapor dosya adları oluşturmak için zaman damgası ve UUID kullanarak her çalıştırmada yeni bir rapor dosyası oluşmasını sağladım.
+
+Tüm bu geliştirmeler sonucunda, farklı web arama API'lerini karşılaştıran, performans metrikleri üreten ve bunları görsel olarak raporlayan kapsamlı bir değerlendirme sistemi oluşturdum. Bu sistem, "Quick Search" kapsamında hangi arama API'sinin daha verimli olduğuna karar vermemde bana yardımcı oldu. 

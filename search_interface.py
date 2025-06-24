@@ -16,30 +16,40 @@ logger = logging.getLogger("search_engine")
 
 @dataclass
 class SearchResult:
-    """Arama sonucunu temsil eden veri sınıfı."""
+    """
+    Arama sonucunu temsil eden veri sınıfı.
+    
+    Attributes:
+        title: Sonuç başlığı
+        link: Sonuç bağlantısı
+        snippet: Sonuç özeti veya açıklaması
+    """
     title: str
     link: str
     snippet: str
 
 
 class SearchEngine(ABC):
-    """Tüm arama motorları için temel arayüz."""
+    """
+    Tüm arama motorları için temel arayüz sınıfı.
+    Bu sınıftan türetilen tüm sınıflar, search() metodunu uygulamalıdır.
+    """
     
     def __init__(self, name: str, source_url: str, license_type: str):
         """
-        SearchEngine temel sınıfını başlatır.
+        Arama motoru sınıfını başlatır.
         
         Args:
-            name: Arama motoru adı
+            name: Arama motorunun adı
             source_url: Arama motorunun kaynak URL'si
-            license_type: Lisans türü
+            license_type: Arama motorunun lisans türü
         """
         self.name = name
         self.source_url = source_url
         self.license_type = license_type
         self.rate_limit_info = "Belirtilmemiş"
         self.pricing_info = "Belirtilmemiş"
-        
+    
     @abstractmethod
     def search(self, query: str, num_results: int = 10) -> List[SearchResult]:
         """
@@ -50,13 +60,13 @@ class SearchEngine(ABC):
             num_results: İstenen sonuç sayısı
             
         Returns:
-            Liste olarak SearchResult nesneleri
+            SearchResult nesnelerinin listesi
         """
         pass
     
     def measure_search_time(self, query: str, num_results: int = 10) -> Tuple[List[SearchResult], float]:
         """
-        Arama süresi ölçümü ile search metodu çağrısı yapar.
+        Arama süresi ölçümü ile search metodunu çağırır.
         
         Args:
             query: Arama sorgusu
@@ -69,7 +79,7 @@ class SearchEngine(ABC):
         results = self.search(query, num_results)
         elapsed_time = time.time() - start_time
         return results, elapsed_time
-    
+        
     def get_engine_info(self) -> Dict[str, Any]:
         """
         Arama motoru hakkında bilgileri döndürür.
